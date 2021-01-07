@@ -58,7 +58,7 @@ let state:State1 = {
 	type: 'State1',
 	field: 'qwerty',
 }
-const mutable_reducer = generate_mutable_reducer<actions>({
+const dispatch = generate_dispatch<actions>({
 	'Action1':(action)=>{
 		state = { // mutate the external state 
 			...state,
