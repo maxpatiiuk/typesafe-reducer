@@ -4,18 +4,26 @@ export function assertExhaustive(x :never) :never {
 
 
 export const generate_reducer = <
-	STATE extends State<string>,
+	STATE,
 	ACTION extends Action<string>
->(obj :generate_reducer_dictionary<STATE, ACTION>) :(state:STATE, key :ACTION)=> STATE =>
-	<Key2 extends keyof typeof obj>(state:STATE, action :Action<Key2>) =>
+>(
+	obj :generate_reducer_dictionary<STATE, ACTION>,
+) :(state:STATE, key :ACTION)=> STATE =>
+	<Key2 extends keyof typeof obj>(
+		state:STATE, action :Action<Key2>
+	) =>
 		(obj != null && typeof obj[action['type']] === 'function') ?
 			obj[action['type']](state,action as any) :
 			assertExhaustive(action['type'] as never);
 
-export const generate_mutable_reducer = <
+export const generate_dispatch = <
 	ACTION extends Action<string>
->(obj :generate_mutable_reducer_dictionary<ACTION>) :(key :ACTION)=> void =>
-		<Key2 extends keyof typeof obj>(action :Action<Key2>) =>
+>(
+	obj :generate_dispatch_dictionary<ACTION>
+) :(key :ACTION)=> void =>
+		<Key2 extends keyof typeof obj>(
+			action :Action<Key2>
+		) =>
 			(obj != null && typeof obj[action['type']] === 'function') ?
 				obj[action['type']](action as any) :
 				assertExhaustive(action['type'] as never);
