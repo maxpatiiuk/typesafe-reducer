@@ -1,5 +1,5 @@
 # typesafe_reducer
-A TypeScript library that helps create a type safe dispatchers and reducer functions
+A TypeScript library that helps create type-safe dispatchers and reducer functions
 
 ## Usage
 ```js
