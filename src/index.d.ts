@@ -1,20 +1,20 @@
-interface Action<action_name extends string> {
-	type :action_name
+export interface Action<ACTION_NAME extends string> {
+	type: ACTION_NAME
 }
 
-interface State<state_name extends string> {
-	type :state_name
+export interface State<STATE_NAME extends string> {
+	type: STATE_NAME
 }
 
-type generate_reducer_dictionary<
-	STATE,
-	ACTION extends Action<string>,
-> = {
-	[action_type in ACTION['type']] :(state:STATE, action :Extract<ACTION,Action<action_type>>) => STATE
+type GenerateReducerDictionary<STATE, ACTION extends Action<string>> = {
+	[actionType in ACTION['type']]: (props:{
+		state: STATE,
+		action: Extract<ACTION, Action<actionType>>
+	}) => STATE
 }
 
-type generate_dispatch_dictionary<
-	ACTION extends Action<string>,
-> = {
-	[action_type in ACTION['type']] :(action :Extract<ACTION,Action<action_type>>) => void
+type GenerateDispatchDictionary<ACTION extends Action<string>> = {
+	[actionType in ACTION['type']]: (
+		action: Extract<ACTION, Action<actionType>>
+	) => void
 }
