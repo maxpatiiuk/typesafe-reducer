@@ -24,47 +24,56 @@ import { generateReducer, State, Action } from 'typesafe-reducer';
 
 ```ts
 // Let's imagine that our application can have two states
-// (`State1` and `State2`). We would create an interface for each
+// (`MainState` and `LoadingState`). We would create an interface for each
 // state, with a `type` property that is going to be used to
 // discrimitate between the states:
-interface State1 {
-  type: 'State1',
-  field: string,
-}
-interface State2 {
-  type: 'State2',
-  is: boolean,
-}
+type LoadingState = State<'LoadingState', {
+  readonly task: Promise<string[]>;
+}>;
+type MainState = State<'MainState', {
+  readonly data: string[];
+}>;
 
 // And we should create a type called `states` that would combine all
 // of the states our application has
-type states = State1|State2;
+type States =
+  | LoadingState;
+  | MainState;
 
 // Let's do something similar for all the posible actions:
-interface Action1 {
-  type: 'Action1',
-  field: string,
-}
-interface Action2 {
-  type: 'Action2',
-  is: boolean,
-}
-type actions = Action1|Action2;
+type LoadedAction = Action<'LoadedAction', {
+  readonly data: string[];
+}>;
+type BeginLoadingAction = Action<'BeginLoadingAction'>;
+
+type Actions =
+  | LoadedAction
+  | BeginLoadingAction;
 
 // Now we can create the reducer:
-// Notice how we supply state and action types in `<states, actions>`
-const reducer = generateReducer<states, actions>({`
-  'Action1':({state, action})=>{
-    // create a new state here and return it
-    return state;
+// Notice how we supply state and action types in `<States, Actions>`
+const reducer = generateReducer<States, Actions>({`
+  'LoadedAction':({state, action})=>{
+    return {
+      type: 'MainState',
+      data: action.data,
+    };
   },
-  'Action2':({state, action})=>{
-    // create a new state here and return in
-    return state;
+  'BeginLoadingAction':({state, action})=>{
+    return {
+      type: 'LoadingState',
+      task: new Promise((resolve)=>
+        setTimeout(()=>{
+          resolve(['test','test','test']);
+        },1000);
+      );
+    };
   }
 });
 
-// And the dispatch statement
+// Now, you can use React's useReducer like this:
+// https://github.com/specify/specify7/blob/90d80aae15ddbb588ea3fe556be3538db5e19483/specifyweb/frontend/js_src/lib/components/wbplanview.tsx#L84
+// Or create your own dispatch:
 const dispatch = (state:states,action:actions)=>{
   const newState = reducer(state,action);
 
@@ -79,8 +88,7 @@ window.addEventListener('click', ()=>
   dispatch(
     currentState,
     {
-      type: 'Action1',
-      field: 'qwerty'
+      type: 'InitializeLoadingAction',
     }
   )
 );
