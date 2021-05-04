@@ -18,6 +18,7 @@
       "es2020",
       "esnext"
     ],
+    "declaration": true,
     "outDir": "./lib",
     "module": "CommonJS",
     "target": "es5",

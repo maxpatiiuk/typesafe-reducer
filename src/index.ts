@@ -1,6 +1,6 @@
 /*
  *
- * Generator of type safe-reducer and dispatches
+ * Generator of type-safe reducer and dispatches
  * Replaces the need for switch(){} statements
  *
  */
