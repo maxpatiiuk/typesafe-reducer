@@ -32,8 +32,6 @@ default_stages:
   - merge-commit
 exclude: ^(lib|.idea)
 repos:
-  #- repo: https://github.com/awebdeveloper/pre-commit-stylelint
-  # global hooks:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
@@ -43,13 +41,15 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: check-docstring-first
-      - id: check-json
       - id: check-merge-conflict
       - id: check-symlinks
       - id: detect-private-key
       - id: mixed-line-ending
       - id: requirements-txt-fixer
 
+  #- repo: https://github.com/awebdeveloper/pre-commit-stylelint
+
+  # global hooks:
   - repo: https://github.com/maxxxxxdlp/pre-commit
     rev: v1.0.5
     hooks:
