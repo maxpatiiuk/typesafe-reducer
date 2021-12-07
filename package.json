@@ -1,6 +1,6 @@
 {
   "name": "typesafe-reducer",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "private": false,
   "description": "A TypeScript library that helps create type-safe dispatcher and reducer functions",
   "license": "MIT",
