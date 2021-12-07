@@ -5,8 +5,6 @@
  *
  */
 
-'use strict';
-
 export type Action<
   ACTION_NAME extends string,
   ACTION_CONTENT extends Record<string, unknown> = Record<never, unknown>
@@ -23,36 +21,34 @@ function assertExhaustive(caseType: never): never {
   );
 }
 
-export const generateReducer = <STATE, ACTION extends Action<string>>(
-  object: {
+export const generateReducer =
+  <STATE, ACTION extends Action<string>>(object: {
     [actionType in ACTION['type']]: (props: {
       readonly state: STATE;
       readonly action: Extract<ACTION, Action<actionType>>;
     }) => STATE;
-  }
-): ((state: STATE, key: ACTION) => STATE) => <KEY extends keyof typeof object>(
-  state: STATE,
-  action: Readonly<Action<KEY>>
-): STATE =>
-  typeof object[action.type] === 'function'
-    ? object[action.type]({
-        state,
-        action: action as Extract<ACTION, Action<KEY>>,
-      })
-    : assertExhaustive(action.type as never);
+  }): ((state: STATE, key: ACTION) => STATE) =>
+  <KEY extends keyof typeof object>(
+    state: STATE,
+    action: Readonly<Action<KEY>>
+  ): STATE =>
+    typeof object[action.type] === 'function'
+      ? object[action.type]({
+          state,
+          action: action as Extract<ACTION, Action<KEY>>,
+        })
+      : assertExhaustive(action.type as never);
 
-export const generateDispatch = <ACTION extends Action<string>>(
-  object: {
+export const generateDispatch =
+  <ACTION extends Action<string>>(object: {
     [actionType in ACTION['type']]: (
       action: Extract<ACTION, Action<actionType>>
     ) => void;
-  }
-): ((key: ACTION) => void) => <KEY extends keyof typeof object>(
-  action: Readonly<Action<KEY>>
-): void =>
-  typeof object[action.type] === 'function'
-    ? object[action.type](action as Extract<ACTION, Action<KEY>>)
-    : assertExhaustive(action.type as never);
+  }): ((key: ACTION) => void) =>
+  <KEY extends keyof typeof object>(action: Readonly<Action<KEY>>): void =>
+    typeof object[action.type] === 'function'
+      ? object[action.type](action as Extract<ACTION, Action<KEY>>)
+      : assertExhaustive(action.type as never);
 
 /*
  * Wrap Action handler in this function to ensure only certain states

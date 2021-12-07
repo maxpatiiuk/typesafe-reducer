@@ -1,32 +1,32 @@
 # typesafe-reducer
 
-A TypeScript library that helps create type-safe dispatcher and
-reducer functions
+A TypeScript library that helps create type-safe dispatcher and reducer
+functions
 
-In order to use this libriary, you should have some familiarity with
+In order to use this library, you should have some familiarity with
 [Typescript ADTs](http://www.javiercasas.com/articles/typescript-adts)
 
 ## Installation
 
 Install the package:
 
-```bash
+```sh
 npm install typesafe-reducer
 ```
 
 Import it into your script:
 
-```ts
+```typescript
 import { generateReducer, State, Action } from 'typesafe-reducer';
 ```
 
 ## Usage
 
-```ts
+```typescript
 // Let's imagine that our application can have two states
 // (`MainState` and `LoadingState`). We would create an interface for each
 // state, with a `type` property that is going to be used to
-// discrimitate between the states:
+// discriminate between the states:
 type LoadingState = State<'LoadingState', {
   readonly task: Promise<string[]>;
 }>;
@@ -40,7 +40,7 @@ type States =
   | LoadingState;
   | MainState;
 
-// Let's do something similar for all the posible actions:
+// Let's do something similar for all the possible actions:
 type LoadedAction = Action<'LoadedAction', {
   readonly data: string[];
 }>;
