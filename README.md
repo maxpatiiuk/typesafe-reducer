@@ -82,7 +82,7 @@ const dispatch = (state:states,action:actions)=>{
 }
 
 // After that, you can call the dispatch function from anywhere and
-// provide the neccessary arguments (`currentState` state is the
+// provide the necessary arguments (`currentState` state is the
 // current state of the application)
 window.addEventListener('click', ()=>
   dispatch(
@@ -112,6 +112,37 @@ const dispatch = generateDispatch<actions>({
   'Action2':(action)=>{
     //mutate the external state here
   }
+});
+```
+
+## Advanced Usage
+
+```typescript
+// There is a functionality to limit certain action calls only to some
+// events. If action is called from a wrong event, an exception is
+// triggered.
+// To implement this, wrap reducer handler in an ensureState function,
+// where first argument is an array of allowed types and second argument
+// is the handler. Example:
+
+const reducer = generateReducer<States, Actions>({`
+  // Only allow calling LoadedAction from LoadingState
+  'LoadedAction': ensureState(['LoadingState'],({state, action})=>{
+    return {
+      type: 'MainState',
+      data: action.data,
+    };
+  }),
+  'BeginLoadingAction': ensureState(['MainState'],({state, action})=>{
+    return {
+      type: 'LoadingState',
+      task: new Promise((resolve)=>
+        setTimeout(()=>{
+          resolve(['test','test','test']);
+        },1000);
+      );
+    };
+  })
 });
 ```
 
