@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxxxxxdlp/typesafe-reducer"
+    "url": "git+https://github.com/maxpatiiuk/typesafe-reducer"
   },
   "author": "Max Patiiuk",
-  "homepage": "https://github.com/maxxxxxdlp/typesafe-reducer/#readme",
+  "homepage": "https://github.com/maxpatiiuk/typesafe-reducer/#readme",
   "bugs": {
-    "url": "https://github.com/maxxxxxdlp/typesafe-reducer/issues"
+    "url": "https://github.com/maxpatiiuk/typesafe-reducer/issues"
   },
   "main": "lib/index.js",
   "scripts": {
